@@ -126,7 +126,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <input class="form-control" type="email" placeholder="email address" name="email">
+                                    <input class="form-control" type="text" placeholder="email address" name="email">
                                 </div>
                             </div>
                             <div class="col-lg-12">
