@@ -1,3 +1,8 @@
+<?php
+session_start();
+require_once "app/helpers.php";
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,105 +10,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/register_form.css">
     <title>Document</title>
 </head>
 <body>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-
-<style>
-    @import url(//fonts.googleapis.com/css?family=Montserrat:300,400,500);
-    .bform {
-        font-family: "Montserrat", sans-serif;
-        color: #8d97ad;
-        font-weight: 300;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .bform h1,
-    .bform h2,
-    .bform h3,
-    .bform h4,
-    .bform h5,
-    .bform h6 {
-        color: #3e4555;
-    }
-
-    .bform .subtitle {
-        color: #8d97ad;
-        line-height: 24px;
-    }
-
-    .bform a {
-        text-decoration: none;
-    }
-
-    .bform .btn-danger-gradiant {
-        background: #ff4d7e;
-        background: -webkit-linear-gradient(legacy-direction(to right), #ff4d7e 0%, #ff6a5b 100%);
-        background: -webkit-gradient(linear, left top, right top, from(#ff4d7e), to(#ff6a5b));
-        background: -webkit-linear-gradient(left, #ff4d7e 0%, #ff6a5b 100%);
-        background: -o-linear-gradient(left, #ff4d7e 0%, #ff6a5b 100%);
-        background: linear-gradient(to right, #ff4d7e 0%, #ff6a5b 100%);
-    }
-
-    .bform .btn-danger-gradiant:hover {
-        background: #ff6a5b;
-        background: -webkit-linear-gradient(legacy-direction(to right), #ff6a5b 0%, #ff4d7e 100%);
-        background: -webkit-gradient(linear, left top, right top, from(#ff6a5b), to(#ff4d7e));
-        background: -webkit-linear-gradient(left, #ff6a5b 0%, #ff4d7e 100%);
-        background: -o-linear-gradient(left, #ff6a5b 0%, #ff4d7e 100%);
-        background: linear-gradient(to right, #ff6a5b 0%, #ff4d7e 100%);
-    }
-
-    .bform .btn-md {
-        padding: 15px 45px;
-        font-size: 16px;
-    }
-
-    .bform .bg-facebook {
-        background-color: #3b5a9a;
-    }
-
-    .bform .bg-twitter {
-        background-color: #56adf2;
-    }
-
-    .bform .text-danger {
-        color: #ff4d7e !important;
-    }
-
-    .bform .right-image {
-        background-position: center bottom;
-        background-size: cover;
-        background-repeat: no-repeat;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        top: 0;
-    }
-
-    @media (max-width: 1023px) {
-        .bform .contact-form {
-            padding-left: 0;
-            padding-right: 0;
-        }
-    }
-
-    @media (max-width: 767px) {
-        .bform .contact-form {
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-    }
-
-    @media (max-width: 1023px) {
-        .bform .right-image {
-            position: relative;
-            bottom: -95px;
-        }
-    }
-</style>
 
 <div class="bform py-5">
     <!-- Row -->
@@ -111,36 +22,53 @@
             <div class="col-lg-12 align-justify-center pr-4 pl-0 contact-form">
                 <div class="">
                     <h2 class="mb-3 font-weight-light">Get Register</h2>
-                    <h6 class="subtitle font-weight-normal">Lorem ipsum dolor sit amet, adipiscing.</h6>
                     <form class="mt-3" action="app/registration.php" method="post">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="first name" name="first_name">
+                                    <?php
+                                    showError('first_name');
+                                    ?>
+                                    <input class="form-control" type="text" placeholder="first name" name="first_name" value="<?= (isset($_SESSION['values']['first_name']))?$_SESSION['values']['first_name']:"" ?>">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="last name" name="last_name">
+                                    <?php
+                                    showError('last_name');
+                                    ?>
+                                    <input class="form-control" type="text" placeholder="last name" name="last_name" value="<?= (isset($_SESSION['values']['last_name']))?$_SESSION['values']['last_name']:"" ?>">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="email address" name="email">
+                                    <?php
+                                    showError('email');
+                                    ?>
+                                    <input class="form-control" type="text" placeholder="email address" name="email" value="<?= (isset($_SESSION['values']['email']))?$_SESSION['values']['email']:"" ?>">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="login" name="login">
+                                    <?php
+                                    showError('login');
+                                    ?>
+                                    <input class="form-control" type="text" placeholder="login" name="login" value="<?= (isset($_SESSION['values']['login']))?$_SESSION['values']['login']:"" ?>">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
+                                    <?php
+                                    showError('password');
+                                    ?>
                                     <input class="form-control" type="password" placeholder="password" name="password">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
+                                    <?php
+                                    showError('password_confirm');
+                                    ?>
                                     <input class="form-control" type="password" placeholder="confirm password" name="password_confirm">
                                 </div>
                             </div>
@@ -156,3 +84,7 @@
     </div>
 </body>
 </html>
+
+<?php
+session_destroy();
+?>

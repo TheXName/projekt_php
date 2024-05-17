@@ -15,9 +15,6 @@ class Validator
         $result = [];
         $errors = [];
         foreach ($this -> rules as $key => $rule) {
-            print "<br>";
-            print $_POST[$key];
-            print "<br>";
             if ($rule["required"]) {
                 if (isset($_POST[$key]) && !empty($_POST[$key])) {
                     if ($rule["type"] == 'email') {
@@ -26,11 +23,11 @@ class Validator
                         }
                     }
                     if ($rule["type"] == 'text') {
-                        if ($rule["max"] < strlen($_POST[$key])) {
-                            $errors[$key] = " '$key' too long";
+                        if (isset($rule["max"]) && $rule["max"] < strlen($_POST[$key])) {
+                            $errors[$key] = "$key too long";
                         }
-                        if ($rule["min"] > strlen($_POST[$key])) {
-                            $errors[$key] = " '$key' too short";
+                        if (isset($rule["min"]) && $rule["min"] > strlen($_POST[$key])) {
+                            $errors[$key] = "$key too short";
                         }
                     }
                 } else {
@@ -45,9 +42,9 @@ class Validator
         $this->result = $result;
         $this->errors = $errors;
 
-//        print "<pre>";
-//        print_r($errors);
-//        print "</pre>";
+        $this->saveErrors();
+        $this->saveValues();
+
         if (count($errors) > 0) {
             return false;
         }
@@ -67,6 +64,20 @@ class Validator
     public function getResult()
     {
         return $this->result;
+    }
+
+    public function saveErrors()
+    {
+        session_start();
+        foreach ($this->errors as $key => $error) {
+            $_SESSION[$key] = $error;
+        }
+    }
+
+    public function saveValues()
+    {
+        session_start();
+        $_SESSION['values'] = $_POST;
     }
 
 }

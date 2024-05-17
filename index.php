@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,8 +25,16 @@
             <li><a href="portfolio.php">Portfólio</a></li>
             <li><a href="qna.php">Q&A</a></li>
             <li><a href="kontakt.php">Kontakt</a></li>
+            <?php
+            if (isset($_SESSION['user_login'])) {
+
+            ?>
+            <li><a href="cabinet.php">My account</a></li>
+            <li><a href="app/logout.php">Logout</a></li>
+            <?php } else { ?>
             <li><a href="registration.php">Sign up</a></li>
             <li><a href="login.php">Sign in</a></li>
+            <?php } ?>
         </ul>
         <a class="hamburger" id="hamburger">
             <i class="fa fa-bars"></i>

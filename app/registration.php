@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 global $pdo;
 require_once "pdo.php";
 require_once "Validator.php";
@@ -43,17 +44,20 @@ $rules = [
 
 $validator = new Validator($rules);
 
+$password_confirm = $_POST['password_confirm'];
+
+if ($_POST['password'] != $password_confirm) {
+    $_SESSION['password_confirm'] = "Passwords do not match";
+}
+
 if ($validator->Validate()) {
     $data = $validator->getResult();
 } else {
-    print_r ($validator->getErrors());
+    header("location: ../registration.php");
     exit();
 }
 
-$password_confirm = $_POST['password_confirm'];
-
 if ($data['password'] != $password_confirm) {
-    echo "Passwords do not match";
     header("location: ../registration.php");
     exit();
 }
