@@ -3,6 +3,7 @@ session_start();
 global $pdo;
 require_once "pdo.php";
 require_once "Validator.php";
+require_once "repositories/UserRepository.php";
 
 $rules = [
     'login' => [
@@ -25,18 +26,9 @@ if ($validator->Validate()) {
     exit();
 }
 
-$sql = 'SELECT * FROM `users` WHERE login = :login AND password = :password';
-
-$statement = $pdo->prepare($sql);
-$statement->execute($data);
-
-$user = $statement->fetch();
-
-if ($user) {
-    $_SESSION['user_login'] = $user['login'];
+$repository = new UserRepository($pdo);
+if ($repository->auth($data)) {
     header("location: ../index.php");
 } else {
-    $_SESSION["login_error"] = "There is no user with this credentials ";
     header("location: ../login.php");
-    exit();
 }

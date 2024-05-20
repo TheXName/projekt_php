@@ -4,6 +4,8 @@ session_start();
 global $pdo;
 require_once "pdo.php";
 require_once "Validator.php";
+require_once "models/User.php";
+require_once "repositories/UserRepository.php";
 
 $rules = [
         'login' => [
@@ -62,10 +64,9 @@ if ($data['password'] != $password_confirm) {
     exit();
 }
 
-$sql = "INSERT INTO `users` (`first_name`, `last_name`, `login`, `email`, `password`) 
-VALUES (:first_name, :last_name, :login, :email, :password)";
+$user = User::create($data);
+$userRepository = new UserRepository($pdo);
 
-$statement = $pdo->prepare($sql);
-$statement->execute($data);
+$userRepository->saveUser($user);
 
 header("location: ../index.php");
