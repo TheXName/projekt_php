@@ -69,4 +69,6 @@ $userRepository = new UserRepository($pdo);
 
 $userRepository->saveUser($user);
 
+$userRepository->auth($data);
+
 header("location: ../index.php");
