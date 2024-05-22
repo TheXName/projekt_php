@@ -14,7 +14,7 @@ $user = User::currentUser();
 
 if ($user) {
     if ($user->isAdmin()) {
-        header("location:admin_panel.php");
+        header("location:admin/admin_panel.php");
         exit();
     }
 } else {

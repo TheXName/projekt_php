@@ -2,27 +2,18 @@
 session_start();
 require_once "../app/models/User.php";
 require_once "../app/repositories/UserRepository.php";
-require_once "../app/repositories/ProductRepository.php";
-global $pdo;
-require_once "../app/pdo.php";
 
 $user = User::currentUser();
 
 if ($user) {
     if (!$user->isAdmin()) {
-        header("Location: cabinet.php");
+        header("Location: ../cabinet.php");
         exit();
     }
 } else {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
-
-$repository = new ProductRepository($pdo);
-$products = $repository->getAllProducts();
-
-var_dump($products);
-
 ?>
 
 <!doctype html>
@@ -38,14 +29,11 @@ var_dump($products);
             fill: white;
         }
     </style>
-    <title>products</title>
+    <title>admin panel</title>
 </head>
 <body>
 <?php
 include "admin_menu.php";
 ?>
-<div class="container">
-    <a type="button" class="btn btn-primary" href="create_product.php">Add produkt</a>
-</div>
 </body>
 </html>
