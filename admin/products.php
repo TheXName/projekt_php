@@ -3,8 +3,7 @@ session_start();
 require_once "../app/models/User.php";
 require_once "../app/repositories/UserRepository.php";
 require_once "../app/repositories/ProductRepository.php";
-global $pdo;
-require_once "../app/pdo.php";
+$pdo = require "../app/pdo.php";
 
 $user = User::currentUser();
 
@@ -20,8 +19,6 @@ if ($user) {
 
 $repository = new ProductRepository($pdo);
 $products = $repository->getAllProducts();
-
-var_dump($products);
 
 ?>
 
@@ -46,6 +43,33 @@ include "admin_menu.php";
 ?>
 <div class="container">
     <a type="button" class="btn btn-primary" href="create_product.php">Add produkt</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Admin_id</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <?php foreach ($products as $product) { ?>
+        <tr>
+            <th><?= $product['id'] ?></th>
+            <td><?= $product['name'] ?></td>
+            <td><?= $product['description'] ?></td>
+            <td><?= $product['admin_id'] ?></td>
+            <td>
+                <a type="button" class="btn btn-danger" href="../app/remove_product.php?id=<?= $product['id'] ?>">Remove</a>
+                <a type="button" class="btn btn-success" href="edit_product.php?id=<?= $product['id'] ?>">Edit</a>
+            </td>
+        </tr>
+        <?php } ?>
+        </tbody>
+
+    </table>
 </div>
 </body>
 </html>

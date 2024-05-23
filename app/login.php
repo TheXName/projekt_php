@@ -1,7 +1,6 @@
 <?php
 session_start();
-global $pdo;
-require_once "pdo.php";
+$pdo = require "pdo.php";
 require_once "Validator.php";
 require_once "repositories/UserRepository.php";
 

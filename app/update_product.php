@@ -19,6 +19,18 @@ $rules = [
         'required' => true,
         'min' => 1,
         'max' => 1000
+    ],
+
+    'id' => [
+        'type' => 'number',
+        'required' => true,
+        'min' => 1
+    ],
+
+    'admin_id' => [
+        'type' => 'number',
+        'required' => true,
+        'min' => 1
     ]
 ];
 
@@ -27,19 +39,13 @@ $validator = new Validator($rules);
 if ($validator->Validate()) {
     $data = $validator->getResult();
 } else {
-    header("location: ../admin/create_product.php");
+    header("location: ../admin/edit_product.php");
     exit();
 }
 
-$user = User::currentUser();
-$data['admin_id'] = $user->getId();
-
 $product = Product::create($data);
 
-var_dump($product);
-
 $productRepository = new ProductRepository($pdo);
-$productRepository -> saveProduct($product);
+$productRepository -> updateProduct($product);
 
 header("location: ../admin/products.php");
-

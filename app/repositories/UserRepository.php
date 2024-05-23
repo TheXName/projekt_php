@@ -50,11 +50,18 @@ class UserRepository
 
     public static function getUserByLogin($login)
     {
-        $pdo = new PDO('mysql:host=localhost;dbname=projekt_php', 'root', '');
+        $pdo = require __DIR__."/../pdo.php";
         $sql = "SELECT * FROM `users` WHERE login = :login";
         $statement = $pdo->prepare($sql);
         $statement->execute([':login' => $login]);
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         return User::create($user);
+    }
+
+    public function getAdmins() {
+        $sql = "SELECT * FROM `users` WHERE role = 2";
+        $result = $this->pdo->query($sql);
+        $admins = $result-> fetchAll(PDO::FETCH_ASSOC);
+        return $admins;
     }
 }

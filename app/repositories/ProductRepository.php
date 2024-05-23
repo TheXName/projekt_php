@@ -27,4 +27,22 @@ class ProductRepository
         $products = $result->fetchAll(PDO::FETCH_ASSOC);
         return $products;
     }
+
+    public function removeProductById(int $id){
+        $sql = "DELETE FROM products WHERE id = $id";
+        $this->pdo->query($sql);
+    }
+
+    public function getProductById(int $id){
+        $sql = "SELECT * FROM products WHERE id = $id";
+        $result = $this->pdo->query($sql);
+        $product = $result->fetch(PDO::FETCH_ASSOC);
+        return $product;
+    }
+
+    public function updateProduct(Product $product){
+        $sql = "UPDATE products SET admin_id = :admin_id, name = :name, description = :description WHERE id = :id";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute($product->toArray());
+    }
 }
